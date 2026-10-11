@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leads Chenille</title>
+<style>
+  :root {
+    --bg: #f6f4f1; --card: #ffffff; --texto: #25201d; --suave: #6f665f; --borda: #e4ded8;
+    --acento: #b8456b; --acento-texto: #ffffff; --campo: #ffffff; --sombra: 0 1px 3px rgba(0,0,0,.08);
+    --c-sem: #1e8e5a; --c-fraco: #c9871a; --c-loja: #3a6fd8; --c-desc: #8a8580;
+  }
+  :root[data-tema="escuro"] {
+    --bg: #17151a; --card: #221f27; --texto: #f0ebf2; --suave: #a79fae; --borda: #37323d;
+    --acento: #e0709a; --acento-texto: #1a1015; --campo: #2b2731; --sombra: none;
+    --c-sem: #4cc58a; --c-fraco: #e8b04c; --c-loja: #7ba2f2; --c-desc: #9a949e;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--texto); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 1.3rem; margin: 0; }
+  .topo { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .sub { color: var(--suave); font-size: .85rem; }
+  .contadores { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 16px 0; }
+  .cont { background: var(--card); border: 1px solid var(--borda); border-radius: 12px; padding: 10px 12px; box-shadow: var(--sombra); }
+  .cont b { display: block; font-size: 1.6rem; line-height: 1.1; }
+  .cont span { color: var(--suave); font-size: .8rem; }
+  .filtros { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-bottom: 16px; }
+  input, select, button { font: inherit; color: var(--texto); background: var(--campo); border: 1px solid var(--borda); border-radius: 8px; padding: 8px 10px; min-height: 40px; }
+  button { cursor: pointer; }
+  button.prim { background: var(--acento); color: var(--acento-texto); border-color: var(--acento); font-weight: 600; }
+  button:hover { filter: brightness(.96); }
+  .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--borda); border-radius: 14px; padding: 14px; box-shadow: var(--sombra); display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .cab { display: flex; gap: 12px; align-items: center; }
+  .avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex: none; background: var(--borda); }
+  .ph { display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--suave); background: var(--borda); }
+  .ident { min-width: 0; flex: 1; }
+  .ident .nome { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ident a { color: var(--acento); text-decoration: none; }
+  .meta { color: var(--suave); font-size: .82rem; }
+  .selos { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .selo { font-size: .72rem; font-weight: 700; padding: 3px 8px; border-radius: 99px; color: #fff; letter-spacing: .02em; }
+  .SEM_CATALOGO { background: var(--c-sem); } .CATALOGO_FRACO { background: var(--c-fraco); }
+  .JA_TEM_LOJA { background: var(--c-loja); } .DESCARTAR { background: var(--c-desc); }
+  .nota { font-size: .8rem; font-weight: 700; border: 1px solid var(--borda); border-radius: 99px; padding: 2px 9px; }
+  .bio { white-space: pre-wrap; word-break: break-word; font-size: .88rem; max-height: 7.5em; overflow: auto; background: var(--bg); border-radius: 8px; padding: 8px; }
+  .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .thumbs img, .thumbs .ph { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; background: var(--borda); font-size: .7rem; }
+  .motivo { font-size: .84rem; color: var(--suave); }
+  .botoes { display: flex; flex-wrap: wrap; gap: 6px; }
+  .botoes a, .botoes button { font-size: .82rem; padding: 6px 10px; min-height: 34px; text-decoration: none; display: inline-flex; align-items: center; border: 1px solid var(--borda); border-radius: 8px; color: var(--texto); background: var(--campo); }
+  .botoes a.wa { background: #1fa855; color: #fff; border-color: #1fa855; }
+  .status { width: 100%; }
+  .vazio { text-align: center; color: var(--suave); padding: 40px 0; grid-column: 1 / -1; }
+  @media (max-width: 420px) { .grade { grid-template-columns: 1fr; } .wrap { padding: 16px; } }
+</style>
+</head>
+<body>
+<noscript><p style="padding:16px;font-weight:600">Este painel precisa de JavaScript. Abra o arquivo leads.html direto no Chrome/Edge (não na prévia do VS Code).</p></noscript>
+<div class="wrap">
+  <div class="topo">
+    <div><h1>🌸 Leads — flores de chenille</h1><div class="sub">Gerado em __GERADO_EM__</div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button id="tema" type="button">🌓 Tema</button>
+      <button id="exportar" type="button" class="prim">Exportar status</button>
+    </div>
+  </div>
+
+  <div class="contadores" id="contadores"></div>
+
+  <div class="filtros">
+    <input id="busca" type="search" placeholder="Buscar (nome, @, bio, cidade)...">
+    <select id="fClasse" aria-label="Classificação">
+      <option value="OPORTUNIDADES">Oportunidades (sem catálogo + fraco)</option>
+      <option value="TODAS">Todas</option>
+      <option value="SEM_CATALOGO">Sem catálogo</option>
+      <option value="CATALOGO_FRACO">Catálogo fraco</option>
+      <option value="JA_TEM_LOJA">Já tem loja</option>
+      <option value="DESCARTAR">Descartar</option>
+    </select>
+    <select id="fStatus" aria-label="Status"></select>
+    <select id="fEstado" aria-label="Estado"></select>
+    <select id="ordem" aria-label="Ordenar">
+      <option value="prioridade">Ordenar: prioridade</option>
+      <option value="seguidores">Ordenar: seguidores</option>
+    </select>
+  </div>
+
+  <div class="grade" id="grade"></div>
+</div>
+
+<script>
+const LEADS = /*__DADOS__*/[];
+const STATUS = ['Novo', 'Contatado', 'Respondeu', 'Negociando', 'Fechado', 'Sem interesse'];
+const ROTULO = { SEM_CATALOGO: 'SEM CATÁLOGO', CATALOGO_FRACO: 'CATÁLOGO FRACO', JA_TEM_LOJA: 'JÁ TEM LOJA', DESCARTAR: 'DESCARTAR' };
+const CHAVE = 'leads-chenille-status-v1';
+const CHAVE_TEMA = 'leads-chenille-tema';
+
+let status = {};
+try { status = JSON.parse(localStorage.getItem(CHAVE) || '{}') || {}; } catch (e) { status = {}; }
+function salvarStatus() { try { localStorage.setItem(CHAVE, JSON.stringify(status)); } catch (e) { /* sem storage */ } }
+const statusDe = (h) => status[h] || 'Novo';
+
+// tema
+function aplicarTema(t) { document.documentElement.setAttribute('data-tema', t); }
+let tema = null;
+try { tema = localStorage.getItem(CHAVE_TEMA); } catch (e) {}
+if (!tema) tema = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'escuro' : 'claro';
+aplicarTema(tema);
+document.getElementById('tema').onclick = () => {
+  tema = tema === 'escuro' ? 'claro' : 'escuro';
+  aplicarTema(tema);
+  try { localStorage.setItem(CHAVE_TEMA, tema); } catch (e) {}
+};
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const iniciais = (l) => ((l.nome || l.handle).replace(/[^\p{L}\s]/gu, ' ').trim().split(/\s+/).slice(0, 2).map((x) => x[0]).join('') || l.handle[0] || '?').toUpperCase();
+const fmt = (n) => (n || 0).toLocaleString('pt-BR');
+
+function img(src, classe, alt, ini) {
+  if (!src) return `<div class="${classe} ph">${esc(ini)}</div>`;
+  return `<img class="${classe}" src="${esc(src)}" alt="${esc(alt)}" loading="lazy" referrerpolicy="no-referrer" data-ini="${esc(ini)}">`;
+}
+
+// placeholder quando a imagem expira ou é bloqueada
+document.addEventListener('error', (e) => {
+  const t = e.target;
+  if (t && t.tagName === 'IMG' && t.dataset.ini !== undefined) {
+    const d = document.createElement('div');
+    d.className = t.className + ' ph';
+    d.textContent = t.dataset.ini;
+    t.replaceWith(d);
+  }
+}, true);
+
+function linkWhats(l) {
+  if (!l.whatsapp) return '';
+  const q = l.mensagem ? '?text=' + encodeURIComponent(l.mensagem) : '';
+  return `https://wa.me/${l.whatsapp}${q}`;
+}
+
+function cartao(l) {
+  const ini = iniciais(l);
+  const wa = linkWhats(l);
+  const thumbs = [0, 1, 2].map((i) => img(l.imagens[i], 'th', 'post ' + (i + 1), '·')).join('');
+  const local = [l.cidade, l.estado].filter(Boolean).join(' - ');
+  const opcoes = STATUS.map((s) => `<option${s === statusDe(l.handle) ? ' selected' : ''}>${s}</option>`).join('');
+  const oport = l.classificacao === 'SEM_CATALOGO' || l.classificacao === 'CATALOGO_FRACO';
+  return `<article class="card" data-h="${esc(l.handle)}">
+    <div class="cab">${img(l.foto, 'avatar', l.nome, ini)}
+      <div class="ident"><div class="nome">${esc(l.nome || l.handle)}</div>
+        <a href="${esc(l.url)}" target="_blank" rel="noopener">@${esc(l.handle)}</a>
+        <div class="meta">${local ? esc(local) + ' · ' : ''}${fmt(l.seguidores)} seguidores${l.dias != null ? ' · post há ' + l.dias + 'd' : ''}</div></div>
+    </div>
+    <div class="selos"><span class="selo ${l.classificacao}">${ROTULO[l.classificacao]}</span>${oport ? `<span class="nota" title="Prioridade">★ ${l.prioridade}/100</span>` : ''}</div>
+    ${l.bio ? `<div class="bio">${esc(l.bio)}</div>` : ''}
+    <div class="thumbs">${thumbs}</div>
+    <div class="motivo"><b>Motivo:</b> ${esc(l.motivo)}</div>
+    <div class="botoes">
+      <a href="${esc(l.url)}" target="_blank" rel="noopener">Abrir perfil</a>
+      ${l.link ? `<a href="${esc(l.link)}" target="_blank" rel="noopener">Abrir link da bio</a>` : ''}
+      ${wa ? `<a class="wa" href="${esc(wa)}" target="_blank" rel="noopener">WhatsApp</a>` : ''}
+      ${l.mensagem ? '<button type="button" data-acao="copiar">Copiar mensagem</button>' : ''}
+    </div>
+    <select class="status" data-acao="status" aria-label="Status do lead">${opcoes}</select>
+  </article>`;
+}
+
+function filtrados() {
+  const q = $('busca').value.trim().toLowerCase();
+  const fc = $('fClasse').value, fs = $('fStatus').value, fe = $('fEstado').value;
+  const lista = LEADS.filter((l) => {
+    if (fc === 'OPORTUNIDADES' && !(l.classificacao === 'SEM_CATALOGO' || l.classificacao === 'CATALOGO_FRACO')) return false;
+    if (!['OPORTUNIDADES', 'TODAS'].includes(fc) && l.classificacao !== fc) return false;
+    if (fs !== 'TODOS' && statusDe(l.handle) !== fs) return false;
+    if (fe !== 'TODOS' && (l.estado || '—') !== fe) return false;
+    if (q && !`${l.nome} ${l.handle} ${l.bio} ${l.cidade} ${l.estado}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const campo = $('ordem').value;
+  return lista.sort((a, b) => (b[campo] - a[campo]) || (b.seguidores - a.seguidores));
+}
+
+function contadores() {
+  const cls = (c) => LEADS.filter((l) => l.classificacao === c).length;
+  const st = (f) => LEADS.filter((l) => f(statusDe(l.handle))).length;
+  const itens = [
+    ['Total', LEADS.length], ['Sem catálogo', cls('SEM_CATALOGO')], ['Catálogo fraco', cls('CATALOGO_FRACO')],
+    ['Já tem loja', cls('JA_TEM_LOJA')], ['Contatados', st((s) => s !== 'Novo')], ['Fechados', st((s) => s === 'Fechado')],
+  ];
+  $('contadores').innerHTML = itens.map(([t, n]) => `<div class="cont"><b>${n}</b><span>${t}</span></div>`).join('');
+}
+
+function render() {
+  contadores();
+  const lista = filtrados();
+  $('grade').innerHTML = lista.length ? lista.map(cartao).join('') : '<div class="vazio">Nenhum lead com esses filtros.</div>';
+}
+
+function montarFiltros() {
+  $('fStatus').innerHTML = '<option value="TODOS">Status: todos</option>' + STATUS.map((s) => `<option>${s}</option>`).join('');
+  const ufs = [...new Set(LEADS.map((l) => l.estado || '—'))].sort();
+  $('fEstado').innerHTML = '<option value="TODOS">Estado: todos</option>' + ufs.map((u) => `<option>${esc(u)}</option>`).join('');
+}
+
+['busca', 'fClasse', 'fStatus', 'fEstado', 'ordem'].forEach((id) => $(id).addEventListener(id === 'busca' ? 'input' : 'change', render));
+
+$('grade').addEventListener('change', (e) => {
+  if (e.target.dataset.acao !== 'status') return;
+  const h = e.target.closest('.card').dataset.h;
+  status[h] = e.target.value;
+  salvarStatus();
+  contadores();
+  if ($('fStatus').value !== 'TODOS') render();
+});
+
+$('grade').addEventListener('click', async (e) => {
+  if (e.target.dataset.acao !== 'copiar') return;
+  const lead = LEADS.find((l) => l.handle === e.target.closest('.card').dataset.h);
+  const original = e.target.textContent;
+  try {
+    await navigator.clipboard.writeText(lead.mensagem);
+  } catch (err) {
+    const ta = document.createElement('textarea');
+    ta.value = lead.mensagem; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e2) {}
+    ta.remove();
+  }
+  e.target.textContent = 'Copiado ✓';
+  setTimeout(() => { e.target.textContent = original; }, 1500);
+});
+
+$('exportar').onclick = () => {
+  const cel = (v) => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+  const linhas = ['arroba;nome;classificacao;prioridade;status'];
+  LEADS.forEach((l) => linhas.push([l.handle, l.nome, l.classificacao, l.prioridade, statusDe(l.handle)].map(cel).join(';')));
+  const blob = new Blob(['﻿' + linhas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'status-leads.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+};
+
+montarFiltros();
+render();
+</script>
+</body>
+</html>

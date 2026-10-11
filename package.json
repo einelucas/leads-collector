@@ -1,0 +1,14 @@
+{
+  "name": "prospeccao-chenille",
+  "version": "1.0.0",
+  "description": "Coleta e classifica artesãs de flores de chenille no Instagram sem catálogo digital",
+  "main": "src/index.js",
+  "scripts": {
+    "teste": "node src/index.js --teste",
+    "coletar": "node src/index.js",
+    "gerar": "node src/gerar.js"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0"
+  }
+}

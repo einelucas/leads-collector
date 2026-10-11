@@ -1,0 +1,4 @@
+# Perfis de partida, um por linha (@fulana, fulana ou URL do perfil).
+# Copie este arquivo para dados/sementes.txt e troque pelos seus.
+@perfil_exemplo_1
+@perfil_exemplo_2

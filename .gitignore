@@ -1,0 +1,12 @@
+# sessão de login do Instagram (cookies!) — NUNCA versionar
+sessao-instagram/
+
+# dados coletados de terceiros e listas de prospecção
+dados/
+saida/
+users
+.playwright-mcp/
+
+node_modules/
+*.log
+.env
